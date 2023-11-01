@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoFinalParte2", "Proy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocios_CusumoApi", "Negocios_CusumoApi\Negocios_CusumoApi.csproj", "{EFADA344-4BBB-4ECB-B696-40DA5325C72C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoFinalParte2BO", "ProyectoFinalParte2BO\ProyectoFinalParte2BO.csproj", "{11D714B4-7F09-40C2-84FD-119C2B348DCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D714B4-7F09-40C2-84FD-119C2B348DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D714B4-7F09-40C2-84FD-119C2B348DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D714B4-7F09-40C2-84FD-119C2B348DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D714B4-7F09-40C2-84FD-119C2B348DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
