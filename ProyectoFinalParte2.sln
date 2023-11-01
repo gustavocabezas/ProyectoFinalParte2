@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProyectoFinalParte2", "ProyectoFinalParte2\ProyectoFinalParte2.csproj", "{54F73C24-FA36-4E7C-B58E-0E390AF14C23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocios_CusumoApi", "Negocios_CusumoApi\Negocios_CusumoApi.csproj", "{EFADA344-4BBB-4ECB-B696-40DA5325C72C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54F73C24-FA36-4E7C-B58E-0E390AF14C23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F73C24-FA36-4E7C-B58E-0E390AF14C23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F73C24-FA36-4E7C-B58E-0E390AF14C23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F73C24-FA36-4E7C-B58E-0E390AF14C23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFADA344-4BBB-4ECB-B696-40DA5325C72C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3D3759E-9A9C-47FD-9737-851820AE5C8D}
+	EndGlobalSection
+EndGlobal
