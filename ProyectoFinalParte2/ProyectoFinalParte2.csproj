@@ -161,9 +161,10 @@
     <Content Include="Css\Login.css" />
     <Content Include="Css\PaginaPrincipal.css" />
     <Content Include="Css\PeliculasPorNombre.css" />
-    <Content Include="Css\PeliculasTotal.css" />
     <Content Include="Css\Principal.css" />
+    <Content Include="Css\prueba para otras cosas.css" />
     <Content Include="Css\prueba.css" />
+    <Content Include="Css\stiloPeli.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -172,6 +173,7 @@
     <Content Include="img\logins.jpg" />
     <Content Include="Paginas\DetallePeliculas.aspx" />
     <Content Include="Paginas\Login.aspx" />
+    <Content Include="Paginas\Logout.aspx" />
     <Content Include="Paginas\PaginaPrincipal.aspx" />
     <Content Include="Paginas\PeliculasPorNombre.aspx" />
     <Content Include="Paginas\PeliculasTotal.aspx" />
@@ -283,6 +285,13 @@
     </Compile>
     <Compile Include="Paginas\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Paginas\Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Paginas\Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
     <Compile Include="Paginas\PaginaPrincipal.aspx.cs">
       <DependentUpon>PaginaPrincipal.aspx</DependentUpon>

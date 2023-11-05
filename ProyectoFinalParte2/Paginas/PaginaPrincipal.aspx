@@ -1,182 +1,63 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PaginaPrincipal.aspx.cs" Inherits="ProyectoFinalParte2.Paginas.PaginaPrincipal" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PaginaPrincipal.aspx.cs" Inherits="ProyectoFinalParte2.Paginas.PaginaPrincipal" Async="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link href="../Css/PaginaPrincipal.css" rel="stylesheet" />
 
 
+
+    <h2 class="h2">Peliculas Top 5 </h2>
     <div class="d-flex justify-content-center">
-     
-        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../Posters/Alien-Vs-Depredador.jpg" justify-content: center; width="300" height="400" alt="Primer slide" />
-                    <a href="DetallePeliculas.aspx" class="no-underline">
-                        <p class="P">Alein Vs Depredador</p>
-                    </a>
-                <div>
-                    <p>El descubrimiento de una antigua pirámide enterrada 
-                        bajo los hielos de la Antártida hace acudir hasta 
-                        el continente helado a un equipo de científicos y 
-                        aventureros.
-                        Una vez allí, hacen un descubrimiento aún más aterrador: 
-                        dos razas de extraterrestres en guerra. Gane quien gane, 
-                        nosotros perdemos. 
-                        La increíble y terrorífica aventura comienza cuando el 
-                        millonario industrial Charles Bishop Weyland reúne a un equipo 
-                        internacional de arqueólogos, científicos y expertos en 
-                        seguridad, dirigidos por la especialista en medioambiente
-                        y aventurera Alexa ”Lex” Woods, para investigar unas misteriosas
-                        ”emanaciones de calor” 
-                        que surgen desde las profundidades de la Antártida.</p>
-                    <p>
-                        Fecha de estreno: 2004
-                    </p>
-                    <p>
-                        Actores: Sanaa Lathan, Raoul Bova, Lance Henriksen
-                    </p>
-                </div>
-            </div>
 
-            <div class="carousel-item">
-                <img src="../Posters/avengers-infinity-war.jpg" width="300" height="400" alt="Terceso slide" />
-                 <a href="DetallePeliculas.aspx" class="no-underline">
-                     <p class="P">Avengers Infinity War</p>
-                 </a>
-                <div>
-                    <p>Los Vengadores y sus aliados deben estar dispuestos a sacrificarlo todo para intentar derrotar al poderoso Thanos antes de que su ataque de devastación y ruina ponga fin al universo.</p>
-                    <p>
-                        Fecha de estreno: 2018
-                    </p>
-                    <p>
-                        Actores: Robert Downey Jr., Chris Hemsworth, Mark Ruffalo
-                    </p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="../Posters/jurassic-world.jpg" width="300" height="400" alt="Cuarto slide" />
-                 <a href="DetallePeliculas.aspx" class="no-underline">
-                     <p class="P">Jurassic world</p>
-                 </a>
-                <div>
-                    <p>El descubrimiento de una antigua pirámide enterrada 
-                        bajo los hielos de la Antártida hace acudir hasta 
-                        el continente helado a un equipo de científicos y 
-                        aventureros.
-                        Una vez allí, hacen un descubrimiento aún más aterrador: 
-                        dos razas de extraterrestres en guerra. Gane quien gane, 
-                        nosotros perdemos. 
-                        La increíble y terrorífica aventura comienza cuando el 
-                        millonario industrial Charles Bishop Weyland reúne a un equipo 
-                        internacional de arqueólogos, científicos y expertos en 
-                        seguridad, dirigidos por la especialista en medioambiente
-                        y aventurera Alexa ”Lex” Woods, para investigar unas misteriosas
-                        ”emanaciones de calor” 
-                        que surgen desde las profundidades de la Antártida.</p>
-                    <p>
-                        Fecha de estreno: 2004
-                    </p>
-                    <p>
-                        Actores: Sanaa Lathan, Raoul Bova, Lance Henriksen
-                    </p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="../Posters/Rec.jpeg"  width="300" height="400" alt="Quinto slide" />
-                 <a href="DetallePeliculas.aspx" class="no-underline">
-                     <p class="P">Rec</p>
-                 </a>
-                <div>
-                    <p>El descubrimiento de una antigua pirámide enterrada 
-                        bajo los hielos de la Antártida hace acudir hasta 
-                        el continente helado a un equipo de científicos y 
-                        aventureros.
-                        Una vez allí, hacen un descubrimiento aún más aterrador: 
-                        dos razas de extraterrestres en guerra. Gane quien gane, 
-                        nosotros perdemos. 
-                        La increíble y terrorífica aventura comienza cuando el 
-                        millonario industrial Charles Bishop Weyland reúne a un equipo 
-                        internacional de arqueólogos, científicos y expertos en 
-                        seguridad, dirigidos por la especialista en medioambiente
-                        y aventurera Alexa ”Lex” Woods, para investigar unas misteriosas
-                        ”emanaciones de calor” 
-                        que surgen desde las profundidades de la Antártida.</p>
-                    <p>
-                        Fecha de estreno: 2004
-                    </p>
-                    <p>
-                        Actores: Sanaa Lathan, Raoul Bova, Lance Henriksen
-                    </p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="../Posters/Terrifier.jpg" width="300" height="400" alt="Sexto slide" />
-                 <a href="DetallePeliculas.aspx" class="no-underline">
-                     <p class="P">Terrifier</p>
-                 </a>
-                <div>
-                    <p>El descubrimiento de una antigua pirámide enterrada 
-                        bajo los hielos de la Antártida hace acudir hasta 
-                        el continente helado a un equipo de científicos y 
-                        aventureros.
-                        Una vez allí, hacen un descubrimiento aún más aterrador: 
-                        dos razas de extraterrestres en guerra. Gane quien gane, 
-                        nosotros perdemos. 
-                        La increíble y terrorífica aventura comienza cuando el 
-                        millonario industrial Charles Bishop Weyland reúne a un equipo 
-                        internacional de arqueólogos, científicos y expertos en 
-                        seguridad, dirigidos por la especialista en medioambiente
-                        y aventurera Alexa ”Lex” Woods, para investigar unas misteriosas
-                        ”emanaciones de calor” 
-                        que surgen desde las profundidades de la Antártida.</p>
-                    <p>
-                        Fecha de estreno: 2004
-                    </p>
-                    <p>
-                        Actores: Sanaa Lathan, Raoul Bova, Lance Henriksen
-                    </p>
-                </div>
-            </div>
-            </div>
-            
-            <br />
-            
-            <br />
-                <ol class="carousel-indicators">
-                    <li data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" class="active"></li>
-                    <li data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="1"></li>
-                    <li data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="2"></li>
-                    <li data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="3"></li>
-                    <li data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="4"></li>
-                </ol>  
 
-       <div class="carousel-control-prev d-none" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-</div>
-
-<div class="carousel-control-next d-none" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-</div>
-        </div>
+    <div>
         
- </div>
 
-    <script>
-        // Agrega este código al final del contenido de tu página.
-        $(document).ready(function () {
-            $('.carousel').carousel({
-                interval: 3000, // Intervalo de 3 segundos (ajusta según tus preferencias)
-            });
-        });
-    </script>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicadores -->
+            <ol class="carousel-indicators">
+                <% for (int i = 0; i < peliculasRecientes.Count; i++) { %>
+                    <li data-target="#myCarousel" data-slide-to="<%= i %>" class="<%= i == 0 ? "active" : "" %>"></li>
+                <% } %>
+            </ol>
 
-     <!-- JavaScript para la función buscarPeliculas -->
+            <!-- Contenido del carrusel -->
+            <div class="carousel-inner">
+                <% for (int i = 0; i < peliculasRecientes.Count; i++) { %>
+                    <div class="carousel-item <%= i == 0 ? "active" : "" %>">
+                        <img src="data:image/jpeg;base64,<%= Convert.ToBase64String(peliculasRecientes[i].PosterImage) %>" class="img d-block w-30" alt="Poster de la película" />
+                        <div>
+                            <h3 class="h3"><a href='<%= "DetallePeliculas.aspx?nombre=" + peliculasRecientes[i].Nombre %>' style="text-decoration: none; color: #ffffff;"><%= peliculasRecientes[i].Nombre %></a></h3>
+                            <p><strong>Reseña:</strong> <%= peliculasRecientes[i].Reseña %></p>
+                            <p><strong>Fecha de Estreno:</strong> <%= peliculasRecientes[i].FechaSalida.ToString("yyyy-MM-dd") %></p>
+                            <p><strong>Calificación:</strong> <%= peliculasRecientes[i].Calificación %></p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Controles del carrusel -->
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span  aria-hidden="true"></span>
+                <span class="sr-only">Anterior</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span aria-hidden="true"></span>
+                <span class="sr-only">Siguiente</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+    <!-- JavaScript para la función buscarPeliculas -->
     <script type="text/javascript">
         function buscarPeliculas() {
             var keyword = document.getElementById("keysss").value;

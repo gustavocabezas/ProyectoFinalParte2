@@ -5,74 +5,31 @@
     font-family: Arial, sans-serif;
 }
 
-/* Reglas de diseño responsivo */
-@media (max-width: 768px) {
-    /* Cambios de estilo para pantallas más pequeñas (por ejemplo, tablets y dispositivos móviles) */
-    .contenedor {
-        flex-direction: column; /* Cambia la dirección del contenedor a columna para apilar los elementos */
-        text-align: center;
-    }
-
-    .imagen img {
-        width: 100%; /* Hace que la imagen ocupe todo el ancho disponible */
-        margin: 0; /* Elimina los márgenes */
-    }
-
-    .contenido p {
-        text-align: left; /* Alinea el texto a la izquierda para una mejor legibilidad */
-    }
-
-    .comentario {
-        padding: 20px;
-    }
-}
 
 .contenedor {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
     padding: 20px;
     background-color: #0b122b;
 }
 
 .imagen img {
-    max-width: 100%;
+    max-width: 300px; /* Establece un ancho máximo para la imagen */
     height: auto;
-    margin-right: 0; /* Elimina el margen derecho */
-    margin-top: 20px; /* Añade un margen superior */
-    margin-bottom: 20px; /* Añade un margen inferior */
+    margin-right: 20px; /* Añade un margen derecho para separar la imagen del texto */
 }
 
-.contenido p {
+.contente {
+    margin-left: 15px;
+    flex: 1; /* Hace que el contenido ocupe el espacio restante */
+}
+
+.P {
     color: white;
+    font-weight: bold; /* Texto en negrita */
+    margin-top: 0; /* Elimina el margen superior para evitar espacios en blanco innecesarios */
 }
 
-.comentario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
-.comentarios-container {
-    margin-bottom: 10px; /* Separación entre la caja de comentarios y el botón "Agregar Comentario" */
-}
-
-.comentario {
-    display: flex; /* Diseño en columna, elementos alineados verticalmente */
-    margin-bottom: 10px; /* Separación entre comentarios */
-}
-
-.comentario-text {
-    flex: 1; /* Ocupa todo el espacio disponible */
-}
-
-.comentario-respuestas {
-    flex: 1; /* Ocupa todo el espacio disponible */
-    margin-left: 20px; /* Espaciado para las respuestas */
-}
-
-.respuesta {
-    margin-top: 5px; /* Separación entre respuestas */
+.p {
+    color: white;
 }
