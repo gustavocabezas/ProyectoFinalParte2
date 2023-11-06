@@ -19,6 +19,7 @@ namespace Negocios_CusumoApi
             BaseAddress = new Uri(baseUrl);
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            DefaultRequestHeaders.Authorization = null;
         }
 
         public void Dispose()
