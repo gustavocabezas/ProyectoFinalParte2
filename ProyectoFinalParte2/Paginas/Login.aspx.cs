@@ -19,8 +19,16 @@ namespace ProyectoFinalParte2.Paginas
 {
     public partial class Login : System.Web.UI.Page
     {
+
+        public bool _isRequiredLogin = false;
+        public bool _isRequiredRegistrarse = false;
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                DataBind();
+            }
         }
 
         protected async void btnLogin_Click(object sender, EventArgs e)
@@ -42,15 +50,15 @@ namespace ProyectoFinalParte2.Paginas
                         if (authorization.StartsWith(prefixToRemove))
                         {
                             authorization = authorization.Substring(prefixToRemove.Length);
-                            HttpContext.Current.Session["Authorization"] = authorization;
+                            Application["Authorization"] = authorization;
                         }
 
-                        Dictionary<string, int> userAttempts = HttpContext.Current.Session["UserAttempts"] as Dictionary<string, int>;
+                        Dictionary<string, int> userAttempts = Application["UserAttempts"] as Dictionary<string, int>;
 
                         if (userAttempts != null && userAttempts.ContainsKey(user))
                         {
                             userAttempts[user] = 0;
-                            HttpContext.Current.Session["UserAttempts"] = new Dictionary<string, int>();
+                            Application["UserAttempts"] = new Dictionary<string, int>();
                         }
 
                         using (UserClient userClient = new UserClient())
@@ -62,7 +70,7 @@ namespace ProyectoFinalParte2.Paginas
                             }
                             else
                             {
-                                HttpContext.Current.Session["UserAttempts"] = new Dictionary<string, int>();
+                                Application["UserAttempts"] = new Dictionary<string, int>();
                                 string script2 = "alert('Su usuario se encuentra inactivo, por favor comuníquese con el administrador');";
                                 ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script2, true);
                             }
@@ -71,7 +79,7 @@ namespace ProyectoFinalParte2.Paginas
                     else
                     {
                         // Obtener el diccionario de la sesión o inicializarlo si no existe
-                        Dictionary<string, int> userAttempts = (Dictionary<string, int>)HttpContext.Current.Session["UserAttempts"];
+                        Dictionary<string, int> userAttempts = (Dictionary<string, int>)Application["UserAttempts"];
                         if (userAttempts == null)
                             userAttempts = new Dictionary<string, int>();
 
@@ -80,7 +88,7 @@ namespace ProyectoFinalParte2.Paginas
                         else
                             userAttempts[login.NombreUsuario] = 1;
 
-                        HttpContext.Current.Session["UserAttempts"] = userAttempts;
+                        Application["UserAttempts"] = userAttempts;
 
                         if (userAttempts[login.NombreUsuario] >= 3)
                         {
@@ -93,7 +101,7 @@ namespace ProyectoFinalParte2.Paginas
                                     string script2 = "alert('Su usuario se encuentra inactivo, por favor comuníquese con el administrador');";
                                     ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script2, true);
                                     // Reiniciar el contador
-                                    HttpContext.Current.Session["AttemptsLogin"] = 0;
+                                    Application["AttemptsLogin"] = 0;
                                 }
                                 else
                                 {
@@ -147,28 +155,44 @@ namespace ProyectoFinalParte2.Paginas
             {
                 try
                 {
-                    // Convierte el objeto newUser a JSON
-                    string jsonUser = JsonConvert.SerializeObject(newUser);
 
-                    // Crea un contenido JSON
-                    StringContent content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+                    HttpResponseMessage checkUserResponse = await apiClient.GetAsync($"api/Peliculas/Usuarios/{nombreUsuario}");
 
-                    // Realiza una solicitud POST a la API para registrar al usuario
-                    HttpResponseMessage response = await apiClient.PostAsync("api/Peliculas/Usuario/usuario", content);
-
-                    if (response.IsSuccessStatusCode)
+                    if (checkUserResponse.IsSuccessStatusCode)
                     {
-                        // El usuario se registró exitosamente
-                        // Puedes mostrar una alerta de éxito mediante JavaScript
-                        string successScript = "alert('Usuario creado con éxito');";
-                        ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", successScript, true);
+                        // Convierte el objeto newUser a JSON
+                        string jsonUser = JsonConvert.SerializeObject(newUser);
+
+                        // Crea un contenido JSON
+                        StringContent content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+
+                        // Realiza una solicitud POST a la API para registrar al usuario
+                        HttpResponseMessage response = await apiClient.PostAsync("api/Peliculas/Usuario/usuario", content);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string successScript = "alert('Usuario creado con éxito');";
+                            ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", successScript, true);
+
+                            // Limpia los TextBox
+                            txtUsername.Text = string.Empty;
+                            txtFirstName.Text = string.Empty;
+                            txtLastName.Text = string.Empty;
+                            txtsecunName.Text = string.Empty;
+                            txtEmail.Text = string.Empty;
+                            txtPassword.Text = string.Empty;
+
+                        }
+                        else
+                        {
+                            string successScript = "alert('Ha ocurrido un error intente de nuevo');";
+                            ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", successScript, true);
+                        }
                     }
                     else
                     {
-                        // Ocurrió un error al registrar al usuario, puedes manejarlo apropiadamente
-                        string errorMessage = await response.Content.ReadAsStringAsync();
-                        // Puedes mostrar el mensaje de error o redirigir a una página de error
-                        // Por ejemplo: Response.Redirect("Error.aspx");
+                        string successScript = "alert('Ha ocurrido un error intente de nuevo');";
+                        ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", successScript, true);
                     }
                 }
                 catch (Exception ex)
@@ -177,52 +201,5 @@ namespace ProyectoFinalParte2.Paginas
                 }
             }
         }
-        //        protected async void Button2_Click(object sender, EventArgs e)
-        //        {
-        //            try
-        //            {
-        //                using (LoginClient loginClient = new LoginClient())
-        //                {
-        //                    LoginBO login = new LoginBO() { NombreUsuario = txtusuariologin.Text, Contraseña = txtcontrasenalogin.Text };
-        //                    string authorization = await loginClient.PostLogin(login);
-        //                    if (!string.IsNullOrEmpty(authorization))
-        //                    {
-        //                        // Almacenar el valor de autorización en una cookie o en la sesión, según tus necesidades
-        //                        HttpContext.Current.Session["Authorization"] = authorization;
-
-        //                        // Redirigir al usuario a la página principal
-        //                        Response.Redirect("PaginaPrincipal.aspx");
-        //                    }
-        //                    else
-        //                    {
-
-        //                        // Inyectar el script que muestra el mensaje de error
-        //                        string script = "alert('Usuario y/o contraseña incorrectos');";
-        //                        ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script, true);
-
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //#if DEBUG
-        //                Debugger.Break();
-        //#endif
-        //            }
-
-        //        }
-
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("PaginaPrincipal.aspx");
-        }
-
-
     }
 }
-
-
-//flata el bloqueo 
-
-// mensaje para el bloqueo “Su usuario se encuentra inactivo,por favor comuníquese con el administrador”

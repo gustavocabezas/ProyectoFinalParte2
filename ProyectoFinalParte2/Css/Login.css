@@ -77,6 +77,15 @@ a {
     text-align: left;
 }
 
+.login-info-box img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 80%; /* Ajusta el tamaño de la imagen según tus necesidades */
+    z-index: 1; /* Para superponer la imagen sobre el panel blanco */
+    transition: 0.3s ease-in-out;
+}
+
 .register-info-box {
     width: 30%;
     padding: 0 50px;
@@ -185,6 +194,7 @@ a {
         width: 70%;
         right: calc(30% - 50px);
     }
+ 
 }
 
 /* Estilos para pantallas aún más pequeñas (móviles) */
@@ -200,5 +210,23 @@ a {
         font-size: 24px;
     }
 }
-    
-    
+
+/* Para hacer que el texto sea más pequeño y blanco */
+.h2, .p, .label, .input {
+    font-size: 16px; /* Tamaño de fuente más pequeño */
+    color: white; /* Color de texto blanco */
+}
+
+/* Estilos para pantallas más pequeñas (Responsive) */
+@media screen and (max-width: 768px) {
+    .h2, .p, .label, .input {
+        font-size: 14px; /* Tamaño de fuente aún más pequeño en pantallas pequeñas */
+    }
+}
+
+/* Estilos para pantallas aún más pequeñas (móviles) */
+@media screen and (max-width: 480px) {
+    .h2, .p, .label, .input {
+        font-size: 12px; /* Tamaño de fuente más pequeño en pantallas móviles */
+    }
+}

@@ -159,6 +159,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Css\DetallePeliculas.css" />
     <Content Include="Css\Login.css" />
+    <Content Include="Css\Nabvar.css" />
     <Content Include="Css\PaginaPrincipal.css" />
     <Content Include="Css\PeliculasPorNombre.css" />
     <Content Include="Css\Principal.css" />
@@ -168,6 +169,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="img\Code_Geass_Logo.jpg" />
     <Content Include="img\login.jpg" />
     <Content Include="img\logind.jpg" />
     <Content Include="img\logins.jpg" />

@@ -8296,7 +8296,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark" style="background-color: rgba(0, 0, 0, 0); top: 0px; left: 0px; height: 98px;">
+       <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark" style="background-color: rgba(0, 0, 0, 0); top: 0px; left: 0px; height: 98px;" id="navbar"  runat="server">
             <div class="container">
                 <a class="navbar-brand" runat="server" color="white" href="~/Paginas/PaginaPrincipal.aspx">PelisCode</a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
@@ -8305,17 +8305,19 @@
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" color="white" runat="server" href="~/Paginas/Login.aspx">Entrar</a></li>
+                        <li class="nav-item" id="navLinkLogin" runat="server"><a class="nav-link" color="white" runat="server" href="~/Paginas/Login.aspx">Entrar</a></li>
                         <%--     <li class="nav-item"><a class="nav-link" color="white" runat="server" href="~/Paginas/Registro.aspx">Registro</a></li>--%>
                         <li class="nav-item"><a class="nav-link" color="white" runat="server" href="~/Contact">Contacto</a></li>
+
+                        <li class="nav-item" id="navLinkLogout" runat="server"><a class="nav-link" color="white" runat="server" href="~/Paginas/Logout">Salir</a></li>
                     </ul>
                     <!-- Barra de búsqueda -->
                     <div class="search-bar" runat="server" id="searchBar">
-                        <asp:TextBox ID="keysss" CssClass="keysss" placeholder="Buscar películas" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="keysss" CssClass="keysss" placeholder="Buscar películas" runat="server" OnTextChanged="keysss_TextChanged"></asp:TextBox>
 
                     </div>
                     &nbsp;
-    <asp:Button ID="buscarPeliculas" CssClass="btnBuscar" runat="server" Text="Buscar" OnClick="buscarPeliculas_Click" />
+                    <asp:Button ID="buscarPeliculas" CssClass="btnBuscar" runat="server" Text="Buscar" OnClick="buscarPeliculas_Click" />
                 </div>
 
             </div>

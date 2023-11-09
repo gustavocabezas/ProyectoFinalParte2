@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -30,6 +31,8 @@ namespace ProyectoFinalParte2.Paginas
             {
                 using (HttpClient httpClient = new HttpClient())
                 {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (string)Application["Authorization"]);
+
                     // Especifica la URL de la API de películas
                     string apiUrl = "https://localhost:44311/api/Peliculas";
                     HttpResponseMessage response = await httpClient.GetAsync(apiUrl);

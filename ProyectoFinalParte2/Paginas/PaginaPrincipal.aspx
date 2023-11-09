@@ -35,7 +35,10 @@
                     <div class="carousel-item <%= i == 0 ? "active" : "" %>">
                         <img src="data:image/jpeg;base64,<%= Convert.ToBase64String(peliculasRecientes[i].PosterImage) %>" class="img d-block w-30" alt="Poster de la película" />
                         <div>
-                            <h3 class="h3"><a href='<%= "DetallePeliculas.aspx?nombre=" + peliculasRecientes[i].Nombre %>' style="text-decoration: none; color: #ffffff;"><%= peliculasRecientes[i].Nombre %></a></h3>
+
+                            <p class="mb-0 mt-4 text-center"><a href='<%= "DetallePeliculas.aspx?nombre=" + peliculasRecientes[i].Nombre %>' class="link" style="color: white; font-size: 25px;"><%= peliculasRecientes[i].Nombre %></a></p>
+
+                            <p></p>
                             <p><strong>Reseña:</strong> <%= peliculasRecientes[i].Reseña %></p>
                             <p><strong>Fecha de Estreno:</strong> <%= peliculasRecientes[i].FechaSalida.ToString("yyyy-MM-dd") %></p>
                             <p><strong>Calificación:</strong> <%= peliculasRecientes[i].Calificación %></p>

@@ -15,11 +15,22 @@ namespace Negocios_CusumoApi
         public DateTime FechaSalida { get; set; }
         public string Poster { get; set; }
         public byte[] PosterImage { get; set; }
+
+        public string Actores { get; set; }
     }
     public class ResponseModel
     {
         public int Codigo { get; set; }
         public List<Peliculas> Mensaje { get; set; }
     }
+
+    public class ResponseModel2
+    {
+        public int Codigo { get; set; }
+        public Peliculas Mensaje { get; set; }
+    }
+
+
+
 
 }
