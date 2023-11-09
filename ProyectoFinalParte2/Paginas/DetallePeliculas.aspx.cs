@@ -44,7 +44,7 @@ namespace ProyectoFinalParte2.Paginas
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (string)Application["Authorization"]);
 
                     // Especifica la URL de la API de películas
-                    string apiUrl = "https://localhost:44311/api/Peliculas/PeliculasNombre/" + nombre;
+                    string apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Peliculas/PeliculasNombre/" + nombre;
                     HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                     if (response.IsSuccessStatusCode)
@@ -66,7 +66,7 @@ namespace ProyectoFinalParte2.Paginas
                         peliculaSeleccionada = pelicula;
 
                         // Ahora obtén los IDs de los actores relacionados a la película desde PeliculaRolesPersonas
-                        apiUrl = "https://localhost:44311/api/PeliculaRolesPersonas/" + pelicula.Mensaje.IdPelicula;
+                        apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/PeliculaRolesPersonas/" + pelicula.Mensaje.IdPelicula;
                         response = await httpClient.GetAsync(apiUrl);
 
                         if (response.IsSuccessStatusCode)
@@ -88,7 +88,7 @@ namespace ProyectoFinalParte2.Paginas
 
                             foreach (var actorId in actoresIds)
                             {
-                                apiUrl = "https://localhost:44311/api/Personas/id=" + actorId.idPersona;
+                                apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Personas/id=" + actorId.idPersona;
                                 response = await httpClient.GetAsync(apiUrl);
 
                                 if (response.IsSuccessStatusCode)

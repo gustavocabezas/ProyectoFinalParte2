@@ -8307,7 +8307,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item" id="navLinkLogin" runat="server"><a class="nav-link" color="white" runat="server" href="~/Paginas/Login.aspx">Entrar</a></li>
                         <%--     <li class="nav-item"><a class="nav-link" color="white" runat="server" href="~/Paginas/Registro.aspx">Registro</a></li>--%>
-                        <li class="nav-item"><a class="nav-link" color="white" runat="server" href="~/Contact">Contacto</a></li>
+                        <%--<li class="nav-item"><a class="nav-link" color="white" runat="server" href="~/Contact">Contacto</a></li>--%>
 
                         <li class="nav-item" id="navLinkLogout" runat="server"><a class="nav-link" color="white" runat="server" href="~/Paginas/Logout">Salir</a></li>
                     </ul>

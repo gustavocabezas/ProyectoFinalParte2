@@ -158,7 +158,7 @@ namespace ProyectoFinalParte2.Paginas
 
                     HttpResponseMessage checkUserResponse = await apiClient.GetAsync($"api/Peliculas/Usuarios/{nombreUsuario}");
 
-                    if (checkUserResponse.IsSuccessStatusCode)
+                    if (checkUserResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
                         // Convierte el objeto newUser a JSON
                         string jsonUser = JsonConvert.SerializeObject(newUser);
@@ -167,7 +167,7 @@ namespace ProyectoFinalParte2.Paginas
                         StringContent content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
 
                         // Realiza una solicitud POST a la API para registrar al usuario
-                        HttpResponseMessage response = await apiClient.PostAsync("api/Peliculas/Usuario/usuario", content);
+                        HttpResponseMessage response = await apiClient.PostAsync("api/Peliculas/Usuarios", content);
 
                         if (response.IsSuccessStatusCode)
                         {

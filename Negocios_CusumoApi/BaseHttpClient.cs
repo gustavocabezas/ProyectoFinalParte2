@@ -14,7 +14,7 @@ namespace Negocios_CusumoApi
         //https://localhost:44311/
         //https://tiusr33pl.cuc-carrera-ti.ac.cr/
 
-        public BaseHttpClient(string baseUrl = "https://localhost:44311/")
+        public BaseHttpClient(string baseUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/")
         {
             Timeout = TimeSpan.FromSeconds(30);
             BaseAddress = new Uri(baseUrl);

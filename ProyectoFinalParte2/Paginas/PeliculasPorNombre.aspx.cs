@@ -39,7 +39,7 @@ namespace ProyectoFinalParte2.Paginas
 
         public async void BuscarPeliculasPorNombre(string nombre)
         {
-            string apiUrl = $"https://localhost:44311/api/Peliculas/PeliculasNombreLike/{nombre}";
+            string apiUrl = $"https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Peliculas/PeliculasNombreLike/{nombre}";
 
             using (HttpClient httpClient = new HttpClient())
             {

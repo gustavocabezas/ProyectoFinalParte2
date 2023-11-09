@@ -34,7 +34,7 @@ namespace ProyectoFinalParte2.Paginas
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (string)Application["Authorization"]);
 
                     // Especifica la URL de la API de películas
-                    string apiUrl = "https://localhost:44311/api/Peliculas";
+                    string apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Peliculas";
                     HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                     if (response.IsSuccessStatusCode)
