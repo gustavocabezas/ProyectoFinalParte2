@@ -1,17 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Web;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Negocios_CusumoApi;
-using System.IO;
-using System.Drawing;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
+using Negocios_CusumoApi;
 using ProyectoFinalParte2BO;
-using System.Net.Http.Headers;
 
 namespace ProyectoFinalParte2.Paginas
 {
@@ -19,10 +17,10 @@ namespace ProyectoFinalParte2.Paginas
     {
         protected ResponseModel2 peliculaSeleccionada;
         protected ResponseModel3 actores;
+        protected ResponseModel5 calificacionesExpertos;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 string peliculaId = Request.QueryString["nombre"];
@@ -34,7 +32,6 @@ namespace ProyectoFinalParte2.Paginas
             }
         }
 
-
         protected async void CargarPeliculaPorNombre(string nombre)
         {
             try
@@ -43,19 +40,13 @@ namespace ProyectoFinalParte2.Paginas
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", (string)Application["Authorization"]);
 
-                    // Especifica la URL de la API de películas
                     string apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Peliculas/PeliculasNombre/" + nombre;
                     HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                     if (response.IsSuccessStatusCode)
                     {
-                        // Lee el contenido de la respuesta de la API
                         string json = await response.Content.ReadAsStringAsync();
-                        // Convierte el JSON en una instancia de la clase Pelicula
                         var pelicula = JsonConvert.DeserializeObject<ResponseModel2>(json);
-
-
-                        // Decodifica y convierte las imágenes
 
                         byte[] imageBytes = Convert.FromBase64String(pelicula.Mensaje.Poster);
                         using (MemoryStream ms = new MemoryStream(imageBytes))
@@ -65,26 +56,21 @@ namespace ProyectoFinalParte2.Paginas
 
                         peliculaSeleccionada = pelicula;
 
-                        // Ahora obtén los IDs de los actores relacionados a la película desde PeliculaRolesPersonas
                         apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/PeliculaRolesPersonas/" + pelicula.Mensaje.IdPelicula;
                         response = await httpClient.GetAsync(apiUrl);
 
                         if (response.IsSuccessStatusCode)
                         {
                             string actoresIdsJson = await response.Content.ReadAsStringAsync();
-
-                            // Deserializar los datos recibidos desde la API en una lista de objetos
                             var actoresIds = JsonConvert.DeserializeObject<List<PeliculaRolesPersonas>>(actoresIdsJson);
 
-                            // Crear una lista de objetos PrioridadCreditosPersona con las propiedades necesarias
                             var PrioriodadCreditosID = actoresIds.Select(actor => new PrioridadCreditosPersona
                             {
                                 IdPersona = actor.idPersona,
                                 PrioridadCreditos = actor.PrioridadCreditos
                             }).ToList();
 
-
-                            var nombresActores = new List<Personas>();
+                            var nombresActores = new List<Involucrado>();
 
                             foreach (var actorId in actoresIds)
                             {
@@ -93,45 +79,67 @@ namespace ProyectoFinalParte2.Paginas
 
                                 if (response.IsSuccessStatusCode)
                                 {
-
                                     string nombreActorJson = await response.Content.ReadAsStringAsync();
                                     var nombreActor = JsonConvert.DeserializeObject<Personas>(nombreActorJson);
 
-                                    nombresActores.Add(nombreActor);
+                                    var involucrado = new Involucrado
+                                    {
+                                        idPersona = actorId.idPersona,
+                                        Nombre = nombreActor.Nombre,
+                                        PrimerApellido = nombreActor.PrimerApellido
+                                    };
 
+                                    string apiUrl2 = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/RolesPersonas/" + actorId.idRolPersona;
+                                    HttpResponseMessage response2 = await httpClient.GetAsync(apiUrl2);
+
+                                    if (response2.IsSuccessStatusCode)
+                                    {
+                                        string rolInvolucrado = await response2.Content.ReadAsStringAsync();
+                                        var actor = JsonConvert.DeserializeObject<RolesPersonas>(rolInvolucrado);
+                                        involucrado.Rol = actor.Rol;
+                                    }
+
+                                    nombresActores.Add(involucrado);
                                 }
-
                             }
 
-                            //ordenar los nombres actores por orden de prioridad con idPersona
-
                             var personasOrdenadas = nombresActores
-                            .Join(PrioriodadCreditosID, persona => persona.idPersona, prioridad => prioridad.IdPersona,
-                            (persona, prioridad) => new { Persona = persona, Prioridad = prioridad.PrioridadCreditos })
-                            .OrderBy(a => a.Prioridad)  // Ordena por Prioridad
-                            .Select(a => a.Persona)  // Selecciona solo los objetos de Personas
-                            .ToList();
+                                .Join(PrioriodadCreditosID, persona => persona.idPersona, prioridad => prioridad.IdPersona,
+                                    (persona, prioridad) => new { Persona = persona, Prioridad = prioridad.PrioridadCreditos })
+                                .OrderBy(a => a.Prioridad)
+                                .Select(a => a.Persona)
+                                .ToList();
 
                             var responseModel3 = new ResponseModel3
                             {
-                                TotalActores = personasOrdenadas,  // personasOrdenadas es la lista de actores ordenados
+                                TotalActores = personasOrdenadas
                             };
                             actores = responseModel3;
+                        }
 
+                        // Obtener calificaciones de expertos
+                        apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Expertos/id=" + pelicula.Mensaje.IdPelicula;
+                        response = await httpClient.GetAsync(apiUrl);
 
-                            //"ACA QUIERO ORDENAR LA LISTA DE ACTORES"
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string jsonExpertosCalificaciones = await response.Content.ReadAsStringAsync();
+                            var expertosCalificaciones = JsonConvert.DeserializeObject<List<ExpertoCalificacion>>(jsonExpertosCalificaciones);
 
+                            calificacionesExpertos = new ResponseModel5
+                            {
+                                Codigo = 200,
+                                Mensajes = expertosCalificaciones
+                            };
                         }
                     }
                     else
                     {
-                        // Maneja el caso en que la respuesta no sea exitosa
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Maneja cualquier excepción que pueda ocurrir
             }
         }
     }

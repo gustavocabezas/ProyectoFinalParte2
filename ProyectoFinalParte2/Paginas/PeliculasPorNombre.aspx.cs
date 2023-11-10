@@ -16,7 +16,8 @@ namespace ProyectoFinalParte2.Paginas
 {
     public partial class PeliculasPorNombre : System.Web.UI.Page
     {
-        protected List<Peliculas> peliculasLike;
+        protected List<PeliculasReciente> listaPeliculasLike = new List<PeliculasReciente>();
+        protected List<Personas> listaActores = new List<Personas>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,16 +26,13 @@ namespace ProyectoFinalParte2.Paginas
                 if (!string.IsNullOrEmpty(Request.QueryString["nombre"]))
                 {
                     string nombrePelicula = Request.QueryString["nombre"];
-
-                   BuscarPeliculasPorNombre(nombrePelicula);
-  
+                    BuscarPeliculasPorNombre(nombrePelicula);
                 }
                 else
                 {
-                    // El parámetro "nombre" no se ha pasado, puedes redirigir a otra página o mostrar un mensaje de error.
+                    
                 }
             }
-
         }
 
         public async void BuscarPeliculasPorNombre(string nombre)
@@ -54,37 +52,70 @@ namespace ProyectoFinalParte2.Paginas
 
                         var responseModel = JsonConvert.DeserializeObject<ResponseModel>(json);
 
-                        peliculasLike = responseModel.Mensaje.ToList();
+                        var peliculasLike = responseModel.Mensaje.ToList();
 
                         // Decodifica y convierte las imágenes
                         foreach (var pelicula in peliculasLike)
                         {
+                            var pelicularescient = new PeliculasReciente();
+                            //esto está local
+                            string apiUrls = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Peliculas/PeliculasActores?id=" + pelicula.IdPelicula;
+
+                            HttpResponseMessage responses = await httpClient.GetAsync(apiUrls);
+
+                            if (responses.IsSuccessStatusCode)
+                            {
+                                string json1 = await responses.Content.ReadAsStringAsync();
+
+                                var responseObj1 = JsonConvert.DeserializeObject<List<Personas>>(json1);
+
+                                listaActores = responseObj1.Take(3).ToList();
+
+                                var contador = 0;
+
+                                foreach (var Actor in listaActores)
+                                {
+                                    if (contador == 0)
+                                    {
+                                        pelicularescient.Actor1 = Actor.Nombre;
+                                        pelicularescient.Apellido1 = Actor.PrimerApellido;
+                                    }
+                                    else if (contador == 1)
+                                    {
+                                        pelicularescient.Actor2 = Actor.Nombre;
+                                        pelicularescient.Apellido2 = Actor.PrimerApellido;
+                                    }
+                                    else if (contador == 2)
+                                    {
+                                        pelicularescient.Actor3 = Actor.Nombre;
+                                        pelicularescient.Apellido3 = Actor.PrimerApellido;
+                                    }
+
+                                    contador++;
+                                }
+                            }
+
+                            pelicularescient.Nombre = pelicula.Nombre;
+                            pelicularescient.Reseña = pelicula.Reseña;
+                            pelicularescient.FechaSalida = pelicula.FechaSalida;
+
                             byte[] imageBytes = Convert.FromBase64String(pelicula.Poster);
                             using (MemoryStream ms = new MemoryStream(imageBytes))
                             {
-                                pelicula.PosterImage = ms.ToArray();
+                                pelicularescient.PosterImage = ms.ToArray();
                             }
-                        }
 
-                        if (responseModel != null && responseModel.Codigo == 200)
-                        {
-                            peliculasLike = responseModel.Mensaje.ToList();
+                            listaPeliculasLike.Add(pelicularescient);
                         }
                     }
                     else
                     {
-
-
                     }
-
-                        // Maneja errores o respuestas no exitosas aquí
-                    }
+                }
                 catch (Exception ex)
                 {
-                    // Maneja excepciones aquí
                 }
-
             }
         }
-   }
+    }
 }

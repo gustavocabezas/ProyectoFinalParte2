@@ -67,14 +67,14 @@
             $('.login-show').addClass('show-log-panel');
         });
 
-        window.onload = function () {
+       <%-- window.onload = function () {
             var txtLogin = document.getElementById("<%= txtlogin.ClientID %>");
             var isRequiredLogin = <%= _isRequiredLogin ? "true" : "false" %>;
 
             if (!isRequiredLogin) {
                 txtLogin.removeAttribute("required");
             }
-        }
+        }--%>
 
         $('.login-reg-panel input[type="radio"]').on('change', function () {
 

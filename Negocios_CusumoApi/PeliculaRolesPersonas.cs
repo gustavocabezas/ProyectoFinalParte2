@@ -15,4 +15,10 @@ namespace Negocios_CusumoApi
         public int PrioridadCreditos { get; set; }
        
     }
+
+    public class RolesPersonas
+    {
+        public int idRol { get; set; }
+        public string Rol { get; set; }
+    }
 }

@@ -16,18 +16,25 @@
             <p><strong>Reseña:</strong> <%= peliculaSeleccionada.Mensaje.Reseña %></p>
             <p><strong>Fecha de Estreno:</strong> <%= peliculaSeleccionada.Mensaje.FechaSalida.ToString("yyyy-MM-dd") %></p>
             <p><strong>Calificación:</strong> <%= peliculaSeleccionada.Mensaje.Calificación %></p>
+            <p>Involucrados:</p>
             <% foreach (var actor in actores.TotalActores)
                 { %>
-            <p><strong>Actor:</strong> <%= actor.Nombre %></p>
-            <p><strong>Primer Apellido:</strong> <%= actor.PrimerApellido %></p>
-            <%--<p><strong>Segundo Apellido:</strong> <%= actor.SegundoApellido %></p>--%>
-<%--        <p><strong>Página Web:</strong> <%= actor.PaginaWeb %></p>
-            <p><strong>Facebook:</strong> <%= actor.Facebook %></p>
-            <p><strong>Twitter:</strong> <%= actor.Twitter %></p>
-            <p><strong>Instagram:</strong> <%= actor.Instagram %></p>
-            <p><strong>Estado:</strong> <%= actor.Estado %></p>--%>
-            <!-- Línea divisoria entre actores -->
+            <p><strong></strong><%= actor.Nombre +" "+actor.PrimerApellido+" "+actor.Rol%></p>
             <% } %>
+            <p>Expertos y Calificaciones:</p>
+            <% foreach (var experto in calificacionesExpertos.Mensajes)
+                { %>
+            <p><strong></strong><%= experto.Nombre +" "+experto.PrimerApellido+" - Calificación: "+experto.Calificacion %></p>
+            <% } %>
+            <div>
+                <h3>Comentarios</h3>
+                <div>
+                    <asp:TextBox ID="txtComentario" runat="server" TextMode="MultiLine" Rows="4" Columns="50"></asp:TextBox>
+                </div>
+                <div>
+                    <asp:Button ID="btnAgregarComentario" runat="server" Text="Agregar Comentario"/>
+                </div>
+            </div>
         </div>
 
     </div>

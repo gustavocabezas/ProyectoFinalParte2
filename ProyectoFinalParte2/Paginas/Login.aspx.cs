@@ -33,7 +33,6 @@ namespace ProyectoFinalParte2.Paginas
 
         protected async void btnLogin_Click(object sender, EventArgs e)
         {
-            // Obtener los valores de los controles TextBox
             string user = txtlogin.Text;
             string password = txtcontrasena.Text;
 
@@ -45,7 +44,6 @@ namespace ProyectoFinalParte2.Paginas
                     string authorization = await loginClient.PostLogin(login);
                     if (!string.IsNullOrEmpty(authorization))
                     {
-                        // Almacenar el valor de autorización en una cookie o en la sesión, según tus necesidades
                         const string prefixToRemove = "Bearer ";
                         if (authorization.StartsWith(prefixToRemove))
                         {
@@ -78,7 +76,6 @@ namespace ProyectoFinalParte2.Paginas
                     }
                     else
                     {
-                        // Obtener el diccionario de la sesión o inicializarlo si no existe
                         Dictionary<string, int> userAttempts = (Dictionary<string, int>)Application["UserAttempts"];
                         if (userAttempts == null)
                             userAttempts = new Dictionary<string, int>();
@@ -92,7 +89,6 @@ namespace ProyectoFinalParte2.Paginas
 
                         if (userAttempts[login.NombreUsuario] >= 3)
                         {
-                            // Si el usuario ha fallado 3 veces
                             using (UserClient userClient = new UserClient())
                             {
                                 bool response = await userClient.PutUserState(new UserBO() { NombreUsuario = user, Estado = "inactivo" });
@@ -100,22 +96,22 @@ namespace ProyectoFinalParte2.Paginas
                                 {
                                     string script2 = "alert('Su usuario se encuentra inactivo, por favor comuníquese con el administrador');";
                                     ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script2, true);
-                                    // Reiniciar el contador
                                     Application["AttemptsLogin"] = 0;
+                                    txtlogin.Text = string.Empty;
                                 }
                                 else
                                 {
-                                    // Inyectar el script que muestra el mensaje de error
                                     string script = "alert('Usuario y/o contraseña incorrectos');";
                                     ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script, true);
+                                    txtlogin.Text = string.Empty;
                                 }
                             }
                         }
                         else
                         {
-                            // Inyectar el script que muestra el mensaje de error
                             string script = "alert('Usuario y/o contraseña incorrectos');";
                             ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script, true);
+                            txtlogin.Text = string.Empty;
                         }
                     }
                 }
@@ -150,7 +146,6 @@ namespace ProyectoFinalParte2.Paginas
                 Correo = correo
             };
 
-            // Crea una instancia del cliente HTTP personalizado que tienes
             using (BaseHttpClient apiClient = new BaseHttpClient())
             {
                 try
@@ -160,13 +155,10 @@ namespace ProyectoFinalParte2.Paginas
 
                     if (checkUserResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
                     {
-                        // Convierte el objeto newUser a JSON
                         string jsonUser = JsonConvert.SerializeObject(newUser);
 
-                        // Crea un contenido JSON
                         StringContent content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
 
-                        // Realiza una solicitud POST a la API para registrar al usuario
                         HttpResponseMessage response = await apiClient.PostAsync("api/Peliculas/Usuarios", content);
 
                         if (response.IsSuccessStatusCode)
@@ -174,7 +166,6 @@ namespace ProyectoFinalParte2.Paginas
                             string successScript = "alert('Usuario creado con éxito');";
                             ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", successScript, true);
 
-                            // Limpia los TextBox
                             txtUsername.Text = string.Empty;
                             txtFirstName.Text = string.Empty;
                             txtLastName.Text = string.Empty;
@@ -197,7 +188,7 @@ namespace ProyectoFinalParte2.Paginas
                 }
                 catch (Exception ex)
                 {
-                    // Manejar excepciones en caso de un error en la solicitud HTTP
+
                 }
             }
         }
