@@ -10,6 +10,8 @@ using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using Negocios_CusumoApi;
 using ProyectoFinalParte2BO;
+using Microsoft.Ajax.Utilities;
+using System.Text;
 
 namespace ProyectoFinalParte2.Paginas
 {
@@ -47,6 +49,7 @@ namespace ProyectoFinalParte2.Paginas
                     {
                         string json = await response.Content.ReadAsStringAsync();
                         var pelicula = JsonConvert.DeserializeObject<ResponseModel2>(json);
+                        Application["idComentario"] = pelicula.Mensaje.IdPelicula;
 
                         byte[] imageBytes = Convert.FromBase64String(pelicula.Mensaje.Poster);
                         using (MemoryStream ms = new MemoryStream(imageBytes))
@@ -141,6 +144,22 @@ namespace ProyectoFinalParte2.Paginas
             catch (Exception ex)
             {
             }
+        }
+
+        protected async void btnAgregarComentario_Click(object sender, EventArgs e)
+        {
+            UserBO userBO = (UserBO)Application["User"];
+            ComentariosBO comentariosBO = new ComentariosBO()
+            {
+
+                Comentario = txtComentario.Text,
+                NombreUsuario = userBO.NombreUsuario,
+                idPelicula = (int)Application["idComentario"],
+                idRespuestaComentario = 0,
+                FechaComentario = DateTime.UtcNow
+            };
+            ComentariosClient comentariosClient = new ComentariosClient();
+            var postComentariosResponse = await comentariosClient.PostComentarios(comentariosBO, (string)Application["Authorization"]);
         }
     }
 }

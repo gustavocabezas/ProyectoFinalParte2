@@ -12,6 +12,7 @@ namespace ProyectoFinalParte2.Paginas
         protected void Page_Load(object sender, EventArgs e)
         {
             Application.Remove("Authorization");
+            Application.Remove("User");
             HttpContext.Current.Session.Clear();
             HttpContext.Current.Session.Abandon();
             Response.Redirect("~/Paginas/Login.aspx");

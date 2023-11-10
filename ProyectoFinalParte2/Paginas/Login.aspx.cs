@@ -1,6 +1,7 @@
 ﻿using Microsoft.Ajax.Utilities;
 using Negocios_CusumoApi;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ProyectoFinalParte2BO;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,7 @@ namespace ProyectoFinalParte2.Paginas
                             UserBO response = await userClient.GetUser(login.NombreUsuario, authorization);
                             if (response != null && !response.Estado.Equals("inactivo", StringComparison.OrdinalIgnoreCase))
                             {
+                                Application["User"] = response;
                                 Response.Redirect("PaginaPrincipal.aspx");
                             }
                             else

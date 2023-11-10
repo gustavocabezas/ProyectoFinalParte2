@@ -5,8 +5,9 @@
     <br />
     <br />
 
+    <% if (peliculaSeleccionada != null && peliculaSeleccionada.Mensaje.PosterImage != null)
+        { %>
     <img src="data:image/jpeg;base64,<%= Convert.ToBase64String(peliculaSeleccionada.Mensaje.PosterImage) %>" class="img d-block mx-auto" width="300" height="400" alt="Poster de la película" />
-
 
     <div class="contenedor">
 
@@ -29,14 +30,15 @@
             <div>
                 <h3>Comentarios</h3>
                 <div>
-                    <asp:TextBox ID="txtComentario" runat="server" TextMode="MultiLine" Rows="4" Columns="50"></asp:TextBox>
+                    <asp:TextBox ID="txtComentario" runat="server" TextMode="MultiLine" Rows="2" Columns="50"></asp:TextBox>
                 </div>
                 <div>
-                    <asp:Button ID="btnAgregarComentario" runat="server" Text="Agregar Comentario"/>
+                    <asp:Button ID="btnAgregarComentario" runat="server" Text="Agregar Comentario" OnClick="btnAgregarComentario_Click" />
                 </div>
             </div>
         </div>
 
     </div>
     <br />
+    <% } %>
 </asp:Content>
