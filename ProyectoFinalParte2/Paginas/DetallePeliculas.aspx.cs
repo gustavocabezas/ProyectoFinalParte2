@@ -21,6 +21,7 @@ namespace ProyectoFinalParte2.Paginas
         protected ResponseModel3 actores = new ResponseModel3();
         protected ResponseModel5 calificacionesExpertos = new ResponseModel5();
         public List<ComentariosBO> Comentarios = new List<ComentariosBO>();
+        public List<ComentariosBO> ComentariosRespuesta = new List<ComentariosBO>();
 
         protected async void Page_Load(object sender, EventArgs e)
         {
@@ -161,11 +162,12 @@ namespace ProyectoFinalParte2.Paginas
                 Comentario = txtComentario.Text,
                 NombreUsuario = userBO.NombreUsuario,
                 idPelicula = (int)Application["idComentario"],
-                idRespuestaComentario = 0,
+                idRespuestaComentario = null,
                 FechaComentario = DateTime.UtcNow
             };
             ComentariosClient comentariosClient = new ComentariosClient();
             var postComentariosResponse = await comentariosClient.PostComentarios(comentariosBO, (string)Application["Authorization"]);
+            Response.Redirect(Request.RawUrl);
         }
 
         private async Task LoadCommentaries(int id)
@@ -173,6 +175,7 @@ namespace ProyectoFinalParte2.Paginas
             try
             {
                 Comentarios.Clear();
+                ComentariosRespuesta.Clear();
                 PeliculasClient peliculasClient = new PeliculasClient();
                 PeliculasTopIdResponse peliculasTopIdResponse = await peliculasClient.GetPeliculasTopInfo(id, (string)Application["Authorization"]);
 
@@ -181,7 +184,10 @@ namespace ProyectoFinalParte2.Paginas
                     try
                     {
                         ComentariosBO comentario = JsonConvert.DeserializeObject<ComentariosBO>(comentarioJson.ToString());
-                        Comentarios.Add(comentario);
+                        if (comentario.idRespuestaComentario == null)
+                            Comentarios.Add(comentario);
+                        else
+                            ComentariosRespuesta.Add(comentario);
                     }
                     catch (JsonSerializationException ex)
                     {
@@ -199,17 +205,36 @@ namespace ProyectoFinalParte2.Paginas
             }
         }
 
-        protected void ResponderComentario(object sender, EventArgs e)
+        protected async void ResponderComentario(object sender, EventArgs e)
         {
-            Button responderButton = (Button)sender;
-            int idComentario = Convert.ToInt32(responderButton.CommandArgument);
+            Button btnResponder = (Button)sender;
+            int idComentario = Convert.ToInt32(btnResponder.CommandArgument);
 
-            // Lógica para responder a comentarios
+            // Encuentra el TextBox correspondiente en el Repeater
+            RepeaterItem item = (RepeaterItem)btnResponder.NamingContainer;
+            TextBox txtRespuesta = (TextBox)item.FindControl("txtRespuesta");
+
+            string respuesta = txtRespuesta.Text;
+
+            UserBO userBO = (UserBO)Application["User"];
+            ComentariosBO comentariosBO = new ComentariosBO()
+            {
+                Comentario = respuesta,
+                NombreUsuario = userBO.NombreUsuario,
+                idPelicula = (int)Application["idComentario"],
+                idRespuestaComentario = idComentario,
+                FechaComentario = DateTime.UtcNow
+            };
+            ComentariosClient comentariosClient = new ComentariosClient();
+            var postComentariosResponse = await comentariosClient.PostComentarios(comentariosBO, (string)Application["Authorization"]);
+            txtRespuesta.Text = string.Empty;
+            Response.Redirect(Request.RawUrl);
         }
+
 
         protected List<ComentariosBO> ObtenerRespuestas(int idComentario)
         {
-            return Comentarios
+            return ComentariosRespuesta
                 .Where(c => c.idRespuestaComentario == idComentario)
                 .ToList();
         }

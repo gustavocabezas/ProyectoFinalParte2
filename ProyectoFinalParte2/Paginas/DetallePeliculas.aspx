@@ -5,7 +5,7 @@
     <br />
     <br />
 
-    <% if (peliculaSeleccionada != null && peliculaSeleccionada.Mensaje.PosterImage != null)
+    <% if (peliculaSeleccionada != null && peliculaSeleccionada.Mensaje != null && peliculaSeleccionada.Mensaje.PosterImage != null)
         { %>
     <img src="data:image/jpeg;base64,<%= Convert.ToBase64String(peliculaSeleccionada.Mensaje.PosterImage) %>" class="img d-block mx-auto" width="300" height="400" alt="Poster de la película" />
 
@@ -21,14 +21,14 @@
             <p><strong>Fecha de Estreno:</strong> <%= peliculaSeleccionada.Mensaje.FechaSalida.ToString("yyyy-MM-dd") %></p>
 
             <p><strong>Calificación:</strong> <%= peliculaSeleccionada.Mensaje.Calificación %></p>
-            <p>Involucrados:</p>
+            <p class="fw-bold">Involucrados:</p>
 
             <% foreach (var actor in actores.TotalActores)
                 { %>
             <p><strong></strong><%= actor.Nombre +" "+actor.PrimerApellido+" "+actor.Rol%></p>
             <% } %>
 
-            <p>Expertos y Calificaciones:</p>
+            <p class="fw-bold">Expertos y Calificaciones:</p>
 
             <% if (calificacionesExpertos.Mensajes != null)
                 {
@@ -49,28 +49,33 @@
                     <asp:Button ID="btnAgregarComentario" runat="server" Text="Agregar Comentario" OnClick="btnAgregarComentario_Click" />
                 </div>
 
-                <br />
-                <br />
+                <hr class="border border-primary border-1 opacity-25">
 
                 <asp:Repeater ID="ComentariosRepeater" runat="server">
                     <ItemTemplate>
                         <div class="comment">
-                            <p><%# Eval("Comentario") %></p>
                             <p><strong>Usuario:</strong> <%# Eval("NombreUsuario") %></p>
+                            <p><strong>Comentario:</strong> <%# Eval("Comentario") %></p>
                             <p><strong>Fecha:</strong> <%# Eval("FechaComentario") %></p>
-                            <!-- Agrega un botón o enlace para responder a este comentario -->
+
+                            <div>
+                                <asp:TextBox ID="txtRespuesta" runat="server" TextMode="MultiLine" Rows="1" Columns="1" CssClass="respuesta-textbox "></asp:TextBox>
+                            </div>
+                            <br />
                             <asp:Button runat="server" ID="ResponderButton" Text="Responder" OnClick="ResponderComentario" CommandArgument='<%# Eval("idComentario") %>' />
 
                             <!-- Muestra respuestas a este comentario si las hay -->
                             <asp:Repeater runat="server" DataSource='<%#  ObtenerRespuestas(Convert.ToInt32(Eval("idComentario"))) %>'>
                                 <ItemTemplate>
-                                    <div class="respuesta">
-                                        <p><%# Eval("Comentario") %></p>
+                                    <div class="comment">
+                                        <br />
                                         <p><strong>Usuario:</strong> <%# Eval("NombreUsuario") %></p>
+                                        <p><strong>Comentario:</strong> <%# Eval("Comentario") %></p>
                                         <p><strong>Fecha:</strong> <%# Eval("FechaComentario") %></p>
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
+                            <hr class="border border-primary border-1 opacity-25">
                         </div>
                     </ItemTemplate>
                 </asp:Repeater>
