@@ -73,6 +73,7 @@
     <Compile Include="BaseHttpClient.cs" />
     <Compile Include="ComentariosClient.cs" />
     <Compile Include="PeliculaRolesPersonas.cs" />
+    <Compile Include="PeliculasClient.cs" />
     <Compile Include="Personas.cs" />
     <Compile Include="UserClient.cs" />
     <Compile Include="LoginClient.cs" />

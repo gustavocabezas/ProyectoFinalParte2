@@ -17,11 +17,12 @@ namespace ProyectoFinalParte2.Paginas
 {
     public partial class DetallePeliculas : System.Web.UI.Page
     {
-        protected ResponseModel2 peliculaSeleccionada;
-        protected ResponseModel3 actores;
-        protected ResponseModel5 calificacionesExpertos;
+        protected ResponseModel2 peliculaSeleccionada = new ResponseModel2();
+        protected ResponseModel3 actores = new ResponseModel3();
+        protected ResponseModel5 calificacionesExpertos = new ResponseModel5();
+        public List<ComentariosBO> Comentarios = new List<ComentariosBO>();
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
@@ -73,7 +74,7 @@ namespace ProyectoFinalParte2.Paginas
                                 PrioridadCreditos = actor.PrioridadCreditos
                             }).ToList();
 
-                            var nombresActores = new List<Involucrado>();
+                            var nombresActores = new List<Negocios_CusumoApi.Involucrado>();
 
                             foreach (var actorId in actoresIds)
                             {
@@ -85,7 +86,7 @@ namespace ProyectoFinalParte2.Paginas
                                     string nombreActorJson = await response.Content.ReadAsStringAsync();
                                     var nombreActor = JsonConvert.DeserializeObject<Personas>(nombreActorJson);
 
-                                    var involucrado = new Involucrado
+                                    var involucrado = new Negocios_CusumoApi.Involucrado
                                     {
                                         idPersona = actorId.idPersona,
                                         Nombre = nombreActor.Nombre,
@@ -120,7 +121,6 @@ namespace ProyectoFinalParte2.Paginas
                             actores = responseModel3;
                         }
 
-                        // Obtener calificaciones de expertos
                         apiUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/api/Expertos/id=" + pelicula.Mensaje.IdPelicula;
                         response = await httpClient.GetAsync(apiUrl);
 
@@ -135,14 +135,20 @@ namespace ProyectoFinalParte2.Paginas
                                 Mensajes = expertosCalificaciones
                             };
                         }
+
+
+                        await LoadCommentaries(pelicula.Mensaje.IdPelicula);
                     }
                     else
                     {
+                        // Manejo de respuesta no exitosa
                     }
+
                 }
             }
             catch (Exception ex)
             {
+                // Manejo de excepción
             }
         }
 
@@ -160,6 +166,52 @@ namespace ProyectoFinalParte2.Paginas
             };
             ComentariosClient comentariosClient = new ComentariosClient();
             var postComentariosResponse = await comentariosClient.PostComentarios(comentariosBO, (string)Application["Authorization"]);
+        }
+
+        private async Task LoadCommentaries(int id)
+        {
+            try
+            {
+                Comentarios.Clear();
+                PeliculasClient peliculasClient = new PeliculasClient();
+                PeliculasTopIdResponse peliculasTopIdResponse = await peliculasClient.GetPeliculasTopInfo(id, (string)Application["Authorization"]);
+
+                foreach (var comentarioJson in peliculasTopIdResponse.Mensaje.Comentarios)
+                {
+                    try
+                    {
+                        ComentariosBO comentario = JsonConvert.DeserializeObject<ComentariosBO>(comentarioJson.ToString());
+                        Comentarios.Add(comentario);
+                    }
+                    catch (JsonSerializationException ex)
+                    {
+                        // Manejar la excepción si la deserialización falla
+                        // Por ejemplo, puedes registrar la excepción o mostrar un mensaje de error
+                    }
+                }
+
+
+                ComentariosRepeater.DataSource = Comentarios;
+                ComentariosRepeater.DataBind();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        protected void ResponderComentario(object sender, EventArgs e)
+        {
+            Button responderButton = (Button)sender;
+            int idComentario = Convert.ToInt32(responderButton.CommandArgument);
+
+            // Lógica para responder a comentarios
+        }
+
+        protected List<ComentariosBO> ObtenerRespuestas(int idComentario)
+        {
+            return Comentarios
+                .Where(c => c.idRespuestaComentario == idComentario)
+                .ToList();
         }
     }
 }

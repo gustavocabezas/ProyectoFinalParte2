@@ -16,7 +16,7 @@ namespace Negocios_CusumoApi
 
         public BaseHttpClient(string baseUrl = "https://tiusr33pl.cuc-carrera-ti.ac.cr/")
         {
-            Timeout = TimeSpan.FromSeconds(30);
+            Timeout = TimeSpan.FromSeconds(50);
             BaseAddress = new Uri(baseUrl);
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
