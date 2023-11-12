@@ -63,6 +63,7 @@
                             </div>
                             <br />
                             <asp:Button runat="server" ID="ResponderButton" Text="Responder" OnClick="ResponderComentario" CommandArgument='<%# Eval("idComentario") %>' />
+                            <asp:Button runat="server" ID="DeleteReponseButton" Text="Eliminar" OnClick="EliminarComentario" CommandArgument='<%# Eval("NombreUsuario") + "|" + Eval("idComentario") %>' />
 
                             <!-- Muestra respuestas a este comentario si las hay -->
                             <asp:Repeater runat="server" DataSource='<%#  ObtenerRespuestas(Convert.ToInt32(Eval("idComentario"))) %>'>
@@ -72,6 +73,32 @@
                                         <p><strong>Usuario:</strong> <%# Eval("NombreUsuario") %></p>
                                         <p><strong>Comentario:</strong> <%# Eval("Comentario") %></p>
                                         <p><strong>Fecha:</strong> <%# Eval("FechaComentario") %></p>
+                                        <br />
+                                        <div>
+                                            <asp:TextBox ID="txtRespuesta2" runat="server" TextMode="MultiLine" Rows="1" Columns="1" CssClass="respuesta-textbox "></asp:TextBox>
+                                        </div>
+                                        <br />
+                                        <asp:Button runat="server" ID="ResponderButton2" Text="Responder" OnClick="ResponderComentario" CommandArgument='<%# Eval("idComentario") %>' />
+                                        <asp:Button runat="server" ID="DeleteReponseButton2" Text="Eliminar" OnClick="EliminarComentario" CommandArgument='<%# Eval("NombreUsuario") + "|" + Eval("idComentario") %>' />
+
+                                        <!-- Muestra otra respuestas a este comentario si las hay -->
+                                        <asp:Repeater runat="server" DataSource='<%#  ObtenerRespuestas(Convert.ToInt32(Eval("idComentario"))) %>'>
+                                            <ItemTemplate>
+                                                <div class="comment">
+                                                    <br />
+                                                    <p><strong>Usuario:</strong> <%# Eval("NombreUsuario") %></p>
+                                                    <p><strong>Comentario:</strong> <%# Eval("Comentario") %></p>
+                                                    <p><strong>Fecha:</strong> <%# Eval("FechaComentario") %></p>
+                                                    <br />
+                                                    <div>
+                                                        <asp:TextBox ID="txtRespuesta3" runat="server" TextMode="MultiLine" Rows="1" Columns="1" CssClass="respuesta-textbox "></asp:TextBox>
+                                                    </div>
+                                                    <br />
+                                                    <asp:Button runat="server" ID="ResponderButton3" Text="Responder" OnClick="ResponderComentario" CommandArgument='<%# Eval("idComentario") %>' />
+                                                    <asp:Button runat="server" ID="DeleteReponseButton3" Text="Eliminar" OnClick="EliminarComentario" CommandArgument='<%# Eval("NombreUsuario") + "|" + Eval("idComentario") %>' />
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:Repeater>
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>

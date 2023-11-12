@@ -214,7 +214,17 @@ namespace ProyectoFinalParte2.Paginas
             RepeaterItem item = (RepeaterItem)btnResponder.NamingContainer;
             TextBox txtRespuesta = (TextBox)item.FindControl("txtRespuesta");
 
+            if (txtRespuesta == null)
+                txtRespuesta = (TextBox)item.FindControl("txtRespuesta2");
+            if (txtRespuesta == null)
+                txtRespuesta = (TextBox)item.FindControl("txtRespuesta3");
+
+            if (txtRespuesta == null)
+                return;
+
             string respuesta = txtRespuesta.Text;
+            if (respuesta == "")
+                respuesta = "Sin palabras";
 
             UserBO userBO = (UserBO)Application["User"];
             ComentariosBO comentariosBO = new ComentariosBO()
@@ -231,6 +241,35 @@ namespace ProyectoFinalParte2.Paginas
             Response.Redirect(Request.RawUrl);
         }
 
+        protected async void EliminarComentario(object sender, EventArgs e)
+        {
+            Button btnResponder = (Button)sender;
+
+            if (!string.IsNullOrEmpty(btnResponder.CommandArgument))
+            {
+                string[] arguments = btnResponder.CommandArgument.Split('|');
+
+                if (arguments.Length == 2)
+                {
+                    string nombreUsuario = arguments[0];
+                    int idComentario = Convert.ToInt32(arguments[1]);
+                    UserBO userBO = (UserBO)Application["User"];
+                    if (userBO.NombreUsuario == nombreUsuario)
+                    {
+                        ComentariosClient comentariosClient = new ComentariosClient();
+                        var deleteComentarioResponse = await comentariosClient.DeleteComentario(idComentario, (string)Application["Authorization"]);
+
+                        Response.Redirect(Request.RawUrl);
+                    }
+                    else
+                    {
+                        string script = "alert('Solo el propio usuario puede eliminar un comentario');";
+                        ClientScript.RegisterClientScriptBlock(this.GetType(), "ErrorScript", script, true);
+                    }
+                }
+            }
+
+        }
 
         protected List<ComentariosBO> ObtenerRespuestas(int idComentario)
         {

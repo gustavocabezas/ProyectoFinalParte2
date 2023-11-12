@@ -47,5 +47,35 @@ namespace Negocios_CusumoApi
                 return null;
             }
         }
+
+        public async Task<ComentariosBO> DeleteComentario(int id, string token)
+        {
+            try
+            {
+                using (var httpClient = new BaseHttpClient())
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    var response = await httpClient.DeleteAsync($"api/Peliculas/Comentarios/{id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<ComentariosBO>(responseContent);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                Debugger.Break();
+#endif
+                return null;
+            }
+        }
     }
 }
